@@ -1,9 +1,59 @@
 class Tree:
-  def __init__(self, root = None):
-    self.root = root
+    def __init__(self, root=None):
+        self.root = root
 
-  def get_element_by_id(self, id):
-    pass
+    def get_element_by_id(self, id):
+        # Helper function for depth-first search
+        def dfs(node, id):
+            if node['id'] == id:
+                return node
+            for child in node['children']:
+                result = dfs(child, id)
+                if result:
+                    return result
+            return None
+
+        # Start DFS from the root
+        return dfs(self.root, id)
+
+# Example usage
+if __name__ == "__main__":
+    # Example tree structure
+    child_1 = {
+        'tag_name': 'div',
+        'id': 'child1',
+        'text_content': 'Child 1',
+        'children': []
+    }
+
+    child_2 = {
+        'tag_name': 'div',
+        'id': 'child2',
+        'text_content': 'Child 2',
+        'children': []
+    }
+
+    child_3 = {
+        'tag_name': 'div',
+        'id': 'child3',
+        'text_content': 'Child 3',
+        'children': []
+    }
+
+    root = {
+        'tag_name': 'div',
+        'id': 'root',
+        'text_content': 'Root',
+        'children': [child_1, child_2, child_3]
+    }
+
+    tree = Tree(root)
+
+
+    # Test the get_element_by_id method
+    print(tree.get_element_by_id('child2'))  # Should print the child_2 dictionary
+    print(tree.get_element_by_id('child4'))  # Should print None
+
 
 # pseudocode:
 # Initialize an empty output list
